@@ -1,6 +1,5 @@
 {
   "name": "Jan_AI_HackV4",
-  //"padlock": "hsiJALDiNu52w9r8lsSCXQ==!PZTezUJx+PBsyY1sOJ12k32ZUziCiC4KZFeBCk2i68eS9WMOLRSPq61mNjVtZ3vA",
   "padlock":  "",
   "version": "2.0",
   "services": [
@@ -31,14 +30,6 @@
       "id": "3"
     },
     {
-      "appId": "8d4e8b56-d43f-4569-849a-98e9624b6252",
-      "appPassword": "fxqw3ShfGexxdtymD/Nn4A==!VZPcHzelb1D9Lgh5sBtFshzArCPoAj/qjwPHf6SsgYs=",
-      "endpoint": "https://janaihackv4.azurewebsites.net/api/messages",
-      "type": "endpoint",
-      "name": "production",
-      "id": "4"
-    },
-    {
       "instrumentationKey": "PD75iWEVCf9GYAQoVeml+w==!hsY/P8juYa8bo8vBgw3Ic0QQ/aEm6cVqebBpPs0BWqyHs4E725S8GF5U1ABom+q0",
       "applicationId": "848ad525-ae87-40b3-8a0e-e95ed79a60e2",
       "apiKeys": {},
@@ -49,18 +40,8 @@
       "type": "appInsights",
       "id": "5"
     },
-    //{
-    //  "appId": "151b08b2-f4dd-449e-acc4-de67b314cee3",
-    //  "authoringKey": "e2XSTdZx8wLzAamSiKlv9A==!CDDDG06GTHysnV1lRvo/Zy31QV1zXbCzDNROrx4j7Jh8cuUZrKVHGMSQ/xT5um+P",
-    //  "version": "0.1",
-    //  "region": "westus",
-    //  "type": "luis",
-    //  "name": "BasicBotLuisApplication",
-    //  "id": "6"
-    //}
     {
       "appId": "bb86d134-8449-43b8-96f6-d45b33748bd3",
-      //"authoringKey": "e2XSTdZx8wLzAamSiKlv9A==!CDDDG06GTHysnV1lRvo/Zy31QV1zXbCzDNROrx4j7Jh8cuUZrKVHGMSQ/xT5um+P",
       "authoringKey": "78e17b1f61af4962b5fe15a64491bcb8",
       "version": "0.1",
       "region": "westus",
@@ -72,7 +53,7 @@
       "type": "qna",
       "name": "GenericQnABot",
       "KbId": "e6f216be-0914-4ef4-a765-8c463cf0d99a",
-      "subscriptionKey": "337df26c-0bbd-4afc-9652-c1d6ff9a0b3a", // Used when creating your QnA service.
+      "subscriptionKey": "337df26c-0bbd-4afc-9652-c1d6ff9a0b3a",
       "endpointKey": "337df26c-0bbd-4afc-9652-c1d6ff9a0b3a",
       "hostname": "https://janhackqnaservice.azurewebsites.net/qnamaker",
       "id": "7"
@@ -81,19 +62,35 @@
       "type": "qna",
       "name": "WimbledonQnABot",
       "KbId": "2fc72bdb-65a7-4f15-a40f-14f2f1936ad3",
-      "subscriptionKey": "337df26c-0bbd-4afc-9652-c1d6ff9a0b3a", // Used when creating your QnA service.
+      "subscriptionKey": "337df26c-0bbd-4afc-9652-c1d6ff9a0b3a",
       "endpointKey": "337df26c-0bbd-4afc-9652-c1d6ff9a0b3a",
       "hostname": "https://janhackqnaservice.azurewebsites.net/qnamaker",
-      "id": "7"
+      "id": "8"
     },
     {
       "type": "qna",
       "name": "TwickenhamQnABot",
       "KbId": "20596053-1a57-4e7d-b344-4000243c4793",
-      "subscriptionKey": "337df26c-0bbd-4afc-9652-c1d6ff9a0b3a", // Used when creating your QnA service.
+      "subscriptionKey": "337df26c-0bbd-4afc-9652-c1d6ff9a0b3a",
       "endpointKey": "337df26c-0bbd-4afc-9652-c1d6ff9a0b3a",
       "hostname": "https://janhackqnaservice.azurewebsites.net/qnamaker",
-      "id": "7"
+      "id": "9"
+    },
+    {
+      "type": "endpoint",
+      "appId": "faf23b52-56f7-472c-b7f7-71007a0b1f70",
+      "appPassword": "mnivpyJN66_wUCOZO837($@",
+      "endpoint": "http://janaihackv4.azurewebsites.net/api/messages",
+      "id": "5baf5dd0-2494-11e9-921b-59d9bb58b703",
+      "name": "Production"
+    },
+    {
+      "appId": "8d4e8b56-d43f-4569-849a-98e9624b6252",
+      "appPassword": "fxqw3ShfGexxdtymD/Nn4A==!VZPcHzelb1D9Lgh5sBtFshzArCPoAj/qjwPHf6SsgYs=",
+      "endpoint": "https://janaihackv4.azurewebsites.net/api/messages",
+      "type": "endpoint",
+      "name": "old production",
+      "id": "4"
     }
 
   ]

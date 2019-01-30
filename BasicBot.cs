@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using BasicBot.Dialogs.State;
 using Microsoft.Bot.Builder;
 using Microsoft.Bot.Builder.Dialogs;
 using Microsoft.Bot.Schema;
@@ -22,8 +23,8 @@ namespace Microsoft.BotBuilderSamples
     /// </summary>
     public class BasicBot : IBot
     {
-        protected string previousIntent = null;
-        const double previousIntentThreshold = 0.6;
+        private const double PreviousIntentThreshold = 0.6;
+        private string previousIntent = null;
 
         // Supported LUIS Intents
         public const string GreetingIntent = "Greeting";
@@ -45,6 +46,7 @@ namespace Microsoft.BotBuilderSamples
 
         private readonly IStatePropertyAccessor<GreetingState> _greetingStateAccessor;
         private readonly IStatePropertyAccessor<DialogState> _dialogStateAccessor;
+        private readonly IStatePropertyAccessor<IntentState> _intentStateAccessor;
         private readonly UserState _userState;
         private readonly ConversationState _conversationState;
         private readonly BotServices _services;
@@ -62,6 +64,7 @@ namespace Microsoft.BotBuilderSamples
 
             _greetingStateAccessor = _userState.CreateProperty<GreetingState>(nameof(GreetingState));
             _dialogStateAccessor = _conversationState.CreateProperty<DialogState>(nameof(DialogState));
+            _intentStateAccessor = _userState.CreateProperty<IntentState>(nameof(IntentState));
 
             // Verify LUIS configuration.
             if (!_services.LuisServices.ContainsKey(LuisConfiguration))
@@ -312,8 +315,8 @@ namespace Microsoft.BotBuilderSamples
         {
             if (!string.IsNullOrEmpty(context.Activity.Text))
             {
-                var greetingState = await _greetingStateAccessor.GetAsync(context, () => new GreetingState());
-                previousIntent = greetingState.Name;
+                var intentState = await _intentStateAccessor.GetAsync(context, () => new IntentState());
+                previousIntent = intentState.PreviousIntent;
 
                 Bot.Builder.AI.QnA.QueryResult[] previousIntentAnswer = null;
                 if (previousIntent != null && previousIntent != appName)
@@ -323,16 +326,15 @@ namespace Microsoft.BotBuilderSamples
 
                 var currentIntentAnswer = await _services.QnAServices[appName].GetAnswersAsync(context);
 
-                if (previousIntentAnswer != null && previousIntentAnswer.Any() && (previousIntentAnswer.First().Score > previousIntentThreshold || (currentIntentAnswer.Any() && (previousIntentAnswer.First().Score - 10) > currentIntentAnswer.First().Score)))
+                if (previousIntentAnswer != null && previousIntentAnswer.Any() && (previousIntentAnswer.First().Score > PreviousIntentThreshold || (currentIntentAnswer.Any() && (previousIntentAnswer.First().Score - 10) > currentIntentAnswer.First().Score)))
                 {
                     await context.SendActivityAsync(previousIntentAnswer.First().Answer, cancellationToken: cancellationToken);
-                    // await context.PostAsync($"You have reached previous intent ({previousIntent}). You said: {result.Query} Your result: {previousIntentAnswer.answer} Score: {previousIntentAnswer.score}");
                 }
                 else
                 {
                     previousIntent = appName;
-                    greetingState.Name = appName;
-                    await _greetingStateAccessor.SetAsync(context, greetingState);
+                    intentState.PreviousIntent = appName;
+                    await _intentStateAccessor.SetAsync(context, intentState);
                     if (currentIntentAnswer.Any())
                     {
                         await context.SendActivityAsync(currentIntentAnswer.First().Answer, cancellationToken: cancellationToken);
@@ -341,9 +343,7 @@ namespace Microsoft.BotBuilderSamples
                     {
                         await context.SendActivityAsync($"Couldn't find an answer in the {appName}.");
                     }
-                    // await context.PostAsync($"You have reached current intent ({currentIntent}). You said: {result.Query} Your result: {currentIntentAnswer.answer} SCore: {currentIntentAnswer.score}");
                 }
-                
             }
         }
     }
