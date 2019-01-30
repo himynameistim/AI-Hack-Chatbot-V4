@@ -77,19 +77,11 @@
       "id": "9"
     },
     {
-      "type": "endpoint",
-      "appId": "faf23b52-56f7-472c-b7f7-71007a0b1f70",
-      "appPassword": "mnivpyJN66_wUCOZO837($@",
-      "endpoint": "http://janaihackv4.azurewebsites.net/api/messages",
-      "id": "5baf5dd0-2494-11e9-921b-59d9bb58b703",
-      "name": "Production"
-    },
-    {
       "appId": "8d4e8b56-d43f-4569-849a-98e9624b6252",
-      "appPassword": "fxqw3ShfGexxdtymD/Nn4A==!VZPcHzelb1D9Lgh5sBtFshzArCPoAj/qjwPHf6SsgYs=",
+      "appPassword": "kadNO19@hlbqIDSPL228_|?",
       "endpoint": "https://janaihackv4.azurewebsites.net/api/messages",
       "type": "endpoint",
-      "name": "old production",
+      "name": "production",
       "id": "4"
     }
 
