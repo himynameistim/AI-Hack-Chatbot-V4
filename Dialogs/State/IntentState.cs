@@ -3,6 +3,6 @@ namespace BasicBot.Dialogs.State
 {
     public class IntentState
     {
-        public string PreviousIntent { get; set; }
+        public string EventPlaceName { get; set; }
     }
 }
