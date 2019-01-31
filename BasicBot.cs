@@ -94,6 +94,7 @@ namespace Microsoft.BotBuilderSamples
 
             Dialogs = new DialogSet(_dialogStateAccessor);
             Dialogs.Add(new GreetingDialog(_greetingStateAccessor, loggerFactory));
+            Dialogs.Add(new GetVenueDialog(_intentStateAccessor, loggerFactory));
         }
 
         private DialogSet Dialogs { get; set; }
@@ -115,7 +116,7 @@ namespace Microsoft.BotBuilderSamples
             {
                 // Perform a call to LUIS to retrieve results for the current activity message.
                 var luisResults = await _services.LuisServices[LuisConfiguration].RecognizeAsync(dc.Context, cancellationToken);
-
+                
                 // If any entities were updated, treat as interruption.
                 // For example, "no my name is tony" will manifest as an update of the name to be "tony".
                 var topScoringIntent = luisResults?.GetTopScoringIntent();
@@ -158,7 +159,7 @@ namespace Microsoft.BotBuilderSamples
                                     break;
 
                                 case EventFAQIntent:
-                                    await DispatchToFAQQnAMakerAsync(luisResults, turnContext);
+                                    await DispatchToFAQQnAMakerAsync(luisResults, turnContext, dc);
                                     break;
                                     
                                 default:
@@ -207,7 +208,7 @@ namespace Microsoft.BotBuilderSamples
             await _userState.SaveChangesAsync(turnContext);
         }
 
-        private async Task DispatchToFAQQnAMakerAsync(RecognizerResult luisResult, ITurnContext context)
+        private async Task DispatchToFAQQnAMakerAsync(RecognizerResult luisResult, ITurnContext context, DialogContext dc)
         {
             if (!string.IsNullOrEmpty(context.Activity.Text))
             {
@@ -239,16 +240,17 @@ namespace Microsoft.BotBuilderSamples
                 }
                 else
                 {
-                    var genericQnAAnswer = await _services.QnAServices[GenericQnAMakerKey].GetAnswersAsync(context);
+                    //var genericQnAAnswer = await _services.QnAServices[GenericQnAMakerKey].GetAnswersAsync(context);
 
-                    if (genericQnAAnswer.Any() && genericQnAAnswer.First().Score > PreviousIntentThreshold)
-                    {
-                        await context.SendActivityAsync(genericQnAAnswer.First().Answer);
-                    }
-                    else
-                    {
-                        await context.SendActivityAsync($"Can you repeat the question with the venue you are interested in.");
-                    }
+                    //if (genericQnAAnswer.Any() && genericQnAAnswer.First().Score > PreviousIntentThreshold)
+                    //{
+                    //    await context.SendActivityAsync(genericQnAAnswer.First().Answer);
+                    //}
+                    //else
+                    //{
+                        await dc.BeginDialogAsync(nameof(GetVenueDialog));
+                    //await context.SendActivityAsync($"Can you repeat the question with the venue you are interested in.");
+                    //}
                 }
             }
         }
